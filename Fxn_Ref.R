@@ -99,10 +99,53 @@ ggplot() +
   geom_sf(data = baseborderNep)
 
 
+######################################################################
+## Imputations of Missing values:#####
+d <- c(123,24,125,NA, 23, NA, 14,11)
+which(is.na(d))
+which(!is.na(d))
+d[which(is.na(d))]
+d[which(!is.na(d))]
 
 
+##########################################
+x <- 1:10
+y <- c(11,12,18,14,17,NA, NA,19, NA,27)
+z <- c(19,11,2,14,20,4,9,10,18,1)
+
+data <- data.frame(x, y, z)
+data
+
+# Step1: Finding the most correlated variable:
+cor(data)
+cor(data, use = "complete.obs")
+symnum(cor(data, use = "complete.obs"))
+
+# Step2: Creating an Indicator variable:
+Ind <- function(t){
+  x <- dim(length(t))
+  x[which(!is.na(t))] = 1
+  x[which(is.na(t))] = 0
+  return(x)
+}
+
+data$I <- Ind(data$y)
 
 
+# Step3: Fitting a linear regression model of Y on X
+lm(y~x, data = data)
+
+#y = 9.7432 + 1.5090*X
+
+# Step4: Missing value imputation
+for(i in 1:nrow(data)){
+  if(data$I[i]== 0){
+    data$y[i]= 9.7432 + 1.5090*data$x[i]
+  }
+}
+
+
+###########################################################
 
 
 
