@@ -1,5 +1,5 @@
 # Load tree data
-tvars <- c( "CN", "PLT_CN", "INVYR", "STATUSCD", "SPCD", "DIA", "HT", "AGENTCD", "TPA_UNADJ", "STOCKING", "VOLCFGRS", "VOLCFNET", "TPAMORT_UNADJ", "TPAREMV_UNADJ")
+tvars <- c( "CN", "PLT_CN", "INVYR", "STATECD", "STATUSCD", "SPCD", "DIA", "HT", "AGENTCD", "TPA_UNADJ", "VOLCFGRS", "VOLCFNET", "TPAMORT_UNADJ", "TPAREMV_UNADJ")
 
 tree_df <- read.csv("TREE.csv")[ , tvars]
 
@@ -25,7 +25,7 @@ spp_df <-read.csv("REF_SPECIES.csv")[ ,svars]
 trees <- merge(trees, spp_df, by = "SPCD")
 
 # Load plot data:
-pvars   <- c("CN", "KINDCD", "LAT", "LON", "ELEV", "ECOSUBCD", "SAMP_METHOD_CD")
+pvars   <- c("CN", "KINDCD", "LAT", "LON", "ELEV")
 plot_df <- read.csv("PLOT.csv")[ , pvars]
 names(plot_df)
 # Rename plot CN to PLT_CN
@@ -33,16 +33,19 @@ names(plot_df)[1] <- "PLT_CN"
 names(plot_df)
 
 # Merge plot with trees data
-trees <- merge(trees, plot_df, by = "PLT_CN")
+trees <- merge(tree_df, plot_df, by = "PLT_CN")
 
 # Load Condition table
-cvars   <- c("PLT_CN", "DSTRBCD1", "DSTRBYR1", "TRTCD1","TRTYR1", "LAND_COVER_CLASS_CD", "AFFORESTATION_CD", "PREV_AFFORESTATION_CD")
+cvars   <- c("PLT_CN", "DSTRBCD1", "DSTRBYR1", "TRTCD1","TRTYR1")
 cond_df <- read.csv("COND.csv")[, cvars]
 
 # Merge Condition dataset with tree data:
 trees <- merge(trees, cond_df, by = "PLT_CN")
 
+write.csv(trees, "Alltrees.csv", row.names = FALSE)
+
 # Select Sugar Maple and Red Maple species
 M <- subset(trees, SPCD == 316 | SPCD == 318)
 
 write.csv(M, "Mapledata.csv", row.names = FALSE)
+
