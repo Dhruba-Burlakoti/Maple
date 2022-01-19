@@ -32,6 +32,11 @@ smvol <- filter(vol, SPCD == 318)
 write.csv(smvol, "MI_SM_vol_rfia", row.names = FALSE)
 write.csv(rmvol, "MI_RM_vol_rfia", row.names = FALSE)
 
+vol <- volume(dat, bySpecies = TRUE,
+              bySizeClass = TRUE,
+              treeType = "live", # ("all", "live", "dead", "gs"")
+              volType = "GROSS", # "NET", "SOUND", "GROSS"
+              )
 
 ################################################################################
 in_rfia <- getFIA(states = 'IN')
