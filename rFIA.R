@@ -32,11 +32,6 @@ smvol <- filter(vol, SPCD == 318)
 write.csv(smvol, "MI_SM_vol_rfia", row.names = FALSE)
 write.csv(rmvol, "MI_RM_vol_rfia", row.names = FALSE)
 
-vol <- volume(dat, bySpecies = TRUE,
-              bySizeClass = TRUE,
-              treeType = "live", # ("all", "live", "dead", "gs"")
-              volType = "GROSS", # "NET", "SOUND", "GROSS"
-              )
 
 ################################################################################
 in_rfia <- getFIA(states = 'IN')
@@ -75,16 +70,11 @@ write.csv(redmap, "MI_RM_BA", row.names = FALSE) # change state name in green
 write_excel_csv(sugmap, "MI_SM_BA.csv") # change state name
 write_excel_csv(redmap, "MI_RM_BA.csv") # change state name
 
+vol <- volume(dat, bySpecies = TRUE,
+              bySizeClass = TRUE,
+              treeType = "live", # ("all", "live", "dead", "gs"")
+              volType = "GROSS", # "NET", "SOUND", "GROSS"
+              )
+
 ################################################################################
-
-
-
-
-
-
-
-
-
-
-
 
