@@ -51,6 +51,34 @@ vol <- volume(in_rfia, bySpecies = TRUE, treeType = "all", volType = "gross",
 # tpa(in_rfia, grpBy = STATECD) # use grpBy = STATECD for calculating state data 
 # from whole US dataset
 
+##################################################################################
+#### Wednesday 1/19/2022 Update ##########
+################################################################################
+###### Michigan #############
+library(rFIA)
+dat <- getFIA(states = 'MI') # change state
+
+tpa_tot <- tpa(dat)
+tpa <- tpa(dat, bySpecies = TRUE)
+
+redmap <- filter(tpa, SCIENTIFIC_NAME == 'Acer rubrum')
+sugmap <- filter(tpa, SCIENTIFIC_NAME == 'Acer saccharum')
+
+write.csv(sugmap, "MI_SM_BA", row.names = FALSE) # change state name
+write.csv(redmap, "MI_RM_BA", row.names = FALSE) # change state name in green
+
+write_excel_csv(sugmap, "MI_SM_BA.csv") # change state name
+write_excel_csv(redmap, "MI_RM_BA.csv") # change state name
+
+################################################################################
+
+
+
+
+
+
+
+
 
 
 
